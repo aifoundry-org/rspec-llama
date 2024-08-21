@@ -5,72 +5,79 @@ module Rspec
     module Helpers
       module ResourceHandler
 
-        def use_model(name, version = nil)
-          models = Rspec::Llama.api_client.fetch_all_models
-          @model = models.find { |m| m['name'] == name }
-          use_model_version(@model['id'], version) if version
-        end
-
-        def use_model_version(model_id, version)
-          model_versions = Rspec::Llama.api_client.fetch_all_model_versions(model_id)
-          @model_version = model_versions.find { |mv| mv['build_name'] == version }
+        def use_model(model_name, version_name)
+          fetch_model(model_name)
+          fetch_model_version(version_name, settled_model['id'])
         end
 
         def use_prompt(name)
-          prompts = Rspec::Llama.api_client.fetch_all_prompts
-          @prompt = prompts.find { |p| p['name'] == name }
+          fetch_prompt(name)
         end
 
         def use_assertion(name)
-          assertions = Rspec::Llama.api_client.fetch_all_assertions
-          @assertion = assertions.find { |a| a['name'] == name }
+          fetch_assertion(name)
         end
 
-        def use_test_run(test_run_id)
-          @test_run = Rspec::Llama.api_client.fetch_test_run(test_run_id)
+        def build_prompt(name, prompt)
+          opts = { name: name, value: prompt, model_id: settled_model['id'] }
+          create_prompt(opts)
         end
 
-        def use_test_model_version_run(test_model_version_run_id)
-          @model_version_run = Rspec::Llama.api_client.fetch_test_model_version_run(test_model_version_run_id)
+        def build_assertion(name, value, assertion_type = 'exclude_all')
+          opts = { name: name, value: value, assertion_type: assertion_type, model_id: settled_model['id'] }
+          create_assertion(opts)
         end
 
-        def create_model(name, version = nil)
-          @model = Rspec::Llama.api_client.create_model(name: name, url: 'http://host.docker.internal:8000/completion')
-          use_model_version(@model['id'], version) if version
-          @model_version.nil? ? create_model_version(@model['id'], version) : @model_version
+        def retrieve_test_run(test_run_id)
+          test_run = fetch_test_run(test_run_id) do
+            Rspec::Llama.api_client.fetch_test_run(test_run_id)
+          end
         end
 
-        def create_model_version(model_id, name)
-          opts = { model_version: { configuration: { n_predict: 100, temperature: 0.8 }.to_json, description: '', built_on: Date.today, build_name: name } }
-          @model_version = Rspec::Llama.api_client.create_model_version(model_id, opts)
+        def retrieve_test_model_version_run(test_model_version_run_id)
+          fetch_test_model_version_run(test_model_version_run_id) do
+            Rspec::Llama.api_client.fetch_test_model_version_run(test_model_version_run_id)
+          end
         end
 
-        def create_prompt(name, prompt, model = settled_model)
-          @prompt = Rspec::Llama.api_client.create_prompt(model['id'], name: name, value: prompt)
+        def retrieve_test_results(test_run_id)
+          fetch_test_results(test_run_id) do
+            test_result_ids = retrieve_test_run(test_run_id)['test_result_ids']
+            test_result_ids.map { |id| Rspec::Llama.api_client.fetch_test_result(id) }
+          end
         end
 
-        def create_assertion(name, value, assertion_type = 'exclude', model = settled_model)
-          @assertion = Rspec::Llama.api_client.create_assertion(model, name: name, assertion_type: assertion_type, value: value)
+        def retrieve_assertion_results(test_result_id)
+          fetch_assertion_results(test_result_id) do
+            Rspec::Llama.api_client.fetch_assertion_results(test_result_id)
+          end
         end
 
-        def fetch_test_results(test_run_id)
-          test_result_ids = Rspec::Llama.api_client.fetch_test_run(test_run_id)['test_result_ids']
-          @test_results = test_result_ids.map { |id| Rspec::Llama.api_client.fetch_test_result(id) }
-        end
-
-        def fetch_assertion_results(test_result_id)
-          @assertion_results = Rspec::Llama.api_client.fetch_assertion_results(test_result_id)
+        def test_run
+          Support::TestRun.new(settled_test_run['id'], settled_test_run['name'], settled_test_run['test_result_ids'])
         end
 
         %i[model prompt assertion model_version test_run test_results assertion_results].each do |method|
-          define_method("settled_#{method}") do |*args|
+          define_method("settled_#{method}") do |*_args|
             instance_variable_get("@#{method}").nil? ? raise("#{method} not settled") : instance_variable_get("@#{method}")
+          end
+        end
+
+        private
+
+        %i[model model_version prompt assertion test_run test_model_version_run test_results
+           assertion_results].each do |method|
+          define_method("fetch_#{method}") do |*args, &block|
+            fetch_resource_with_error_handling(method, *args, &block)
+          end
+        end
+
+        %i[prompt assertion].each do |method|
+          define_method("create_#{method}") do |args|
+            create_resource_with_error_handling(method, args)
           end
         end
       end
     end
   end
 end
-
-
-

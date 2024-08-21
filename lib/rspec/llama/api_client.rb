@@ -73,13 +73,13 @@ module Rspec
         api_execute(:post, uri, opts)
       end
 
-      def create_prompt(model_id, **opts)
+      def create_prompt(opts)
         params = { prompt: { value: opts[:value], name: opts[:name] } }
         uri = URI("#{endpoint}/prompts.json")
         api_execute(:post, uri, params)
       end
 
-      def create_assertion(model_id, **opts)
+      def create_assertion(opts)
         uri = URI("#{endpoint}/assertions.json")
         api_execute(:post, uri, opts)
       end
