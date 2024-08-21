@@ -1,11 +1,19 @@
 # frozen_string_literal: true
 
+require "active_support/all"
+
+require_relative 'helpers/resource_handler'
+require_relative 'helpers/executor'
+require_relative 'helpers/base'
+require_relative 'helpers/errors'
+
 module Rspec
   module Llama
     module Helpers
-      def execute_test_run(test_id)
-        Rspec::Llama.api_client.execute_test_run(test_id)
-      end
+      include Base
+      include ResourceHandler
+      include Executor
+      include Errors
     end
   end
 end

@@ -7,7 +7,7 @@ require 'webmock/rspec'
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.api_endpoint = 'https://api.example.com'
-  config.auth_endpoint = 'https://api.example.com/authenticate'
+  config.auth_endpoint = 'https://api.example.com/users/sign_in'
   config.api_creds = { user: { email: 'your_username', password: 'your_password' } }
   config.example_status_persistence_file_path = '.rspec_status'
 
