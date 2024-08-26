@@ -2,13 +2,15 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in rspec-llama.gemspec
 gemspec
 
-gem 'rake', '~> 12.0'
-gem 'rspec', '~> 3.0'
-gem 'activesupport'
-group :development, :test do
-  gem 'rubocop'
-  gem 'webmock', '~> 3.0'
-end
+# gem 'llama_cpp'
+gem 'ruby-openai'
+
+gem 'dotenv'
+gem 'pry'
+gem 'rspec'
+gem 'rubocop'
+gem 'rubocop-rspec'
+gem 'vcr'
+gem 'webmock'

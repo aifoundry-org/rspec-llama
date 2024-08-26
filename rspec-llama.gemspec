@@ -17,8 +17,7 @@ Gem::Specification.new do |s|
   s.date = '2024-07-31'
   s.description = 'Write a longer description or delete this line.'
   s.email = ['vadser1999@gmail.com']
-  s.files = ['.gitignore', '.rspec', '.travis.yml', 'CODE_OF_CONDUCT.md', 'Gemfile',
-             'Gemfile.lock', 'LICENSE.txt', 'README.md', 'Rakefile', 'bin/console', 'bin/setup', 'lib/rspec/llama.rb', 'lib/rspec/llama/api_client.rb', 'lib/rspec/llama/configuration.rb', 'lib/rspec/llama/helpers.rb', 'lib/rspec/llama/version.rb', 'rspec-llama.gemspec']
+  s.files = Dir['CODE_OF_CONDUCT.md', 'LICENSE.txt', 'README.md', 'lib/**/*.rb']
   s.homepage = 'https://example.com'
   s.licenses = ['MIT']
   s.required_ruby_version = Gem::Requirement.new('>= 2.3.0')

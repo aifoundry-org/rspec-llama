@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe Rspec::Llama do
+RSpec.describe RSpec::Llama do
   it 'has a version number' do
-    expect(Rspec::Llama::VERSION).not_to be nil
+    expect(RSpec::Llama::VERSION).not_to be_nil
   end
 end
