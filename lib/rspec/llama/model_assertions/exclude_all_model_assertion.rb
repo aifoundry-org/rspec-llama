@@ -6,7 +6,7 @@ module RSpec
       private
 
       def passed?(result)
-        values.all? { |value| !result.to_s.include?(value) }
+        values.all? { |value| !result.to_s.match?(value) }
       end
     end
   end

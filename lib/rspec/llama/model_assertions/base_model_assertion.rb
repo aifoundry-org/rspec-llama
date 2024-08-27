@@ -5,8 +5,8 @@ module RSpec
     class BaseModelAssertion
       attr_reader :values
 
-      # @param [String] value
-      # @param [Array<String>] other_values
+      # @param [String, Regexp] value
+      # @param [Array<String, Regexp>] other_values
       def initialize(value, *other_values)
         @values = [value, *other_values]
       end
