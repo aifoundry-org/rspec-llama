@@ -8,19 +8,21 @@ module RSpec
       DEFAULT_N_PREDICT = -1 # Generate until context is filled
       DEFAULT_STOP = /\A<(?:end|user|assistant|endoftext|system)>\z/
 
-      attr_reader :model_path, :temperature, :threads, :n_predict, :additional_options
+      attr_reader :model_path, :temperature, :threads, :n_predict, :stop, :additional_options
 
       def initialize(
         model_path:,
         temperature: DEFAULT_TEMPERATURE,
         threads: DEFAULT_THREADS,
         n_predict: DEFAULT_N_PREDICT,
+        stop: DEFAULT_STOP,
         **additional_options
       )
         @model_path = model_path
         @temperature = temperature
         @threads = threads
         @n_predict = n_predict
+        @stop = stop
         @additional_options = additional_options
       end
 

@@ -45,23 +45,25 @@ RSpec.describe RSpec::Llama::Helpers do
 
     context 'model configuration for llama_cpp' do
       it 'builds a LlamaCppModelConfiguration with default options' do
-        config = helpers.build_model_configuration(:llama_cpp)
+        config = helpers.build_model_configuration(:llama_cpp, model_path: '/path/to/model')
 
         expect(config).to have_attributes(
           class: RSpec::Llama::LlamaCppModelConfiguration,
+          model_path: '/path/to/model',
           temperature: 0.5,
-          n_predict: 500,
+          n_predict: -1,
           stop: /\A<(?:end|user|assistant|endoftext|system)>\z/
         )
       end
 
       it 'builds a LlamaCppModelConfiguration with given options' do
         config = helpers.build_model_configuration(
-          :llama_cpp, temperature: 0.7, n_predict: 100, stop: /some regexp/
+          :llama_cpp, model_path: '/path/to/model', temperature: 0.7, n_predict: 100, stop: /some regexp/
         )
 
         expect(config).to have_attributes(
           class: RSpec::Llama::LlamaCppModelConfiguration,
+          model_path: '/path/to/model',
           temperature: 0.7,
           n_predict: 100,
           stop: /some regexp/
