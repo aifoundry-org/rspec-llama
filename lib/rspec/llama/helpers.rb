@@ -22,11 +22,8 @@ module RSpec
         model_version: 'ModelVersionModelAssertion'
       }.freeze
 
-      def build_model_prompt(message, *other_messages)
-        # TODO: add support for processing multiple messages within the same chat context
-        raise NotImplementedError if other_messages.any?
-
-        ModelPrompt.new(message, *other_messages)
+      def build_model_prompt(message)
+        ModelPrompt.new(message)
       end
 
       def build_model_configuration(configuration_type, **)

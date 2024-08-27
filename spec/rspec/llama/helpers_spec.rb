@@ -4,12 +4,12 @@ RSpec.describe RSpec::Llama::Helpers do
   subject(:helpers) { Class.new { include RSpec::Llama::Helpers }.new }
 
   describe '#build_model_prompt' do
-    it 'builds a ModelPrompt with a single message' do
+    it 'builds a ModelPrompt with a message' do
       prompt = helpers.build_model_prompt('What is the capital of France?')
 
       expect(prompt).to have_attributes(
         class: RSpec::Llama::ModelPrompt,
-        messages: ['What is the capital of France?']
+        message: 'What is the capital of France?'
       )
     end
   end

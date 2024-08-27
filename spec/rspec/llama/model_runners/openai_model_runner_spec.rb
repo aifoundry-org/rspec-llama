@@ -11,7 +11,7 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
     )
   end
   let(:model_prompt) do
-    instance_double(RSpec::Llama::ModelPrompt, messages: ['Is Minsk the capital of Belarus?'])
+    instance_double(RSpec::Llama::ModelPrompt, message: 'Is Minsk the capital of Belarus?')
   end
 
   context 'with valid access token' do

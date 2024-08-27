@@ -3,10 +3,10 @@
 module RSpec
   module Llama
     class ModelPrompt
-      attr_reader :messages
+      attr_reader :message
 
-      def initialize(*messages)
-        @messages = messages
+      def initialize(message)
+        @message = message
       end
     end
   end
