@@ -22,7 +22,7 @@ module RSpec
       # @param [RSpec::Llama::ModelPrompt] prompt
       # @return [RSpec::Llama::OpenaiModelRunnerResult]
       def call(configuration, prompt)
-        messages = [role: 'user', content: prompt.message]
+        messages = [{ role: 'user', content: prompt.message }]
         response = client.chat(parameters: { **configuration.to_h, messages: })
 
         RSpec::Llama::OpenaiModelRunnerResult.new(response)
