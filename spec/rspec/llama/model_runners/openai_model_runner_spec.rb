@@ -5,7 +5,7 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
 
   let(:runner_options) { { access_token: } }
   let(:model_configuration) do
-    instance_double(RSpec::Lama::OpenaiModelConfiguration, to_h: {
+    instance_double(RSpec::Llama::OpenaiModelConfiguration, to_h: {
                       model: 'gpt-3.5-turbo', temperature: 0.5
                     })
   end

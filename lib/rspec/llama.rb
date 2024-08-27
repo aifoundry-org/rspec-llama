@@ -8,13 +8,11 @@ require_relative 'llama/helpers'
 module RSpec
   module Llama
     # Model configurations
-    autoload :BaseModelConfiguration, 'rspec/llama/model_configurations/base_model_configuration'
     autoload :OpenaiModelConfiguration, 'rspec/llama/model_configurations/openai_model_configuration'
     autoload :LlamaCppModelConfiguration, 'rspec/llama/model_configurations/llama_cpp_model_configuration'
     autoload :OllamaModelConfiguration, 'rspec/llama/model_configurations/ollama_model_configuration'
 
     # Model runners
-    autoload :BaseModelRunner, 'rspec/llama/model_runners/base_model_runner'
     autoload :OpenaiModelRunner, 'rspec/llama/model_runners/openai_model_runner'
     autoload :LlamaCppModelRunner, 'rspec/llama/model_runners/llama_cpp_model_runner'
     autoload :OllamaModelRunner, 'rspec/llama/model_runners/ollama_model_runner'

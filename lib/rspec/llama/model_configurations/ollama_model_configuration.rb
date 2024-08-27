@@ -2,7 +2,7 @@
 
 module RSpec
   module Llama
-    class OllamaModelConfiguration < BaseModelConfiguration
+    class OllamaModelConfiguration
       DEFAULT_MODEL = 'llama3.1'
 
       attr_reader :model

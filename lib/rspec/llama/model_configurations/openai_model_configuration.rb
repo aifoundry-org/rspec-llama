@@ -2,7 +2,7 @@
 
 module RSpec
   module Llama
-    class OpenaiModelConfiguration < BaseModelConfiguration
+    class OpenaiModelConfiguration
       DEFAULT_MODEL = 'gpt-3.5-turbo'
       DEFAULT_TEMPERATURE = 0.5
 

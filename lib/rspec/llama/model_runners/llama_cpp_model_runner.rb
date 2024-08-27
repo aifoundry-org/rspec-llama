@@ -2,7 +2,7 @@
 
 module RSpec
   module Llama
-    class LlamaCppModelRunner < BaseModelRunner
+    class LlamaCppModelRunner
     end
   end
 end

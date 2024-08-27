@@ -2,7 +2,7 @@
 
 module RSpec
   module Llama
-    class LlamaCppModelConfiguration < BaseModelConfiguration
+    class LlamaCppModelConfiguration
       DEFAULT_TEMPERATURE = 0.5
       DEFAULT_N_PREDICT = 500
       DEFAULT_STOP = ['<|end|>', '<|user|>', '<|assistant|>', '<|endoftext|>', '<|system|>'].freeze

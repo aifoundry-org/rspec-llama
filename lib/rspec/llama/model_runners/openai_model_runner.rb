@@ -4,7 +4,7 @@ require 'openai'
 
 module RSpec
   module Llama
-    class OpenaiModelRunner < BaseModelRunner
+    class OpenaiModelRunner
       # @param [String] url
       # @param [String] access_token
       # @param [Numeric] request_timeout

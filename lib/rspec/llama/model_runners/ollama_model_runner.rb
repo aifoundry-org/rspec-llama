@@ -2,7 +2,7 @@
 
 module RSpec
   module Llama
-    class OllamaModelRunner < BaseModelRunner
+    class OllamaModelRunner
     end
   end
 end
