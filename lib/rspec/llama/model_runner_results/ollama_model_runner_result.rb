@@ -2,6 +2,7 @@
 
 module RSpec
   module Llama
-    VERSION = '0.1.0'
+    class OllamaModelRunnerResult
+    end
   end
 end
