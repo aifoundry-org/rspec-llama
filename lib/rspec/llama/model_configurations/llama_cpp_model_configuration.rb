@@ -28,14 +28,14 @@ module RSpec
 
       def to_a
         cli_options = [
-          '--model', @model_path,
-          '--temp', @temperature.to_s,
-          '--threads', @threads.to_s,
-          '--predict', @n_predict.to_s
+          '--model', model_path,
+          '--temp', temperature.to_s,
+          '--threads', threads.to_s,
+          '--predict', n_predict.to_s
         ]
 
         # Add additional options in key-value pair format
-        @additional_options.each do |option, value|
+        additional_options.each do |option, value|
           if value == true
             cli_options << "--#{option}" # For flags
           else
