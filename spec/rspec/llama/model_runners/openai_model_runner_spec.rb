@@ -17,25 +17,21 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
   context 'with valid access token' do
     let(:access_token) { ENV.fetch('OPENAI_ACCESS_TOKEN') }
 
-    it 'returns the response hash' do
-      VCR.use_cassette('openai_model_runner/valid_access_token') do
-        result = call_runner!
+    it 'returns the response hash', vcr: { cassette_name: 'openai_model_runner/valid_access_token' } do
+      result = call_runner!
 
-        expect(result).to have_attributes(
-          class: RSpec::Llama::OpenaiModelRunnerResult,
-          to_s: 'Yes, Minsk is the capital of Belarus.'
-        )
-      end
+      expect(result).to have_attributes(
+        class: RSpec::Llama::OpenaiModelRunnerResult,
+        to_s: 'Yes, Minsk is the capital of Belarus.'
+      )
     end
   end
 
   context 'with invalid access token' do
     let(:access_token) { 'invalid_token' }
 
-    it 'raises error' do
-      VCR.use_cassette('openai_model_runner/invalid_access_token') do
-        expect { call_runner! }.to raise_error
-      end
+    it 'raises error', vcr: { cassette_name: 'openai_model_runner/invalid_access_token' } do
+      expect { call_runner! }.to raise_error
     end
   end
 end

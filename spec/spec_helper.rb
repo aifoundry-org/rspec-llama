@@ -59,6 +59,9 @@ VCR.configure do |config|
   config.cassette_library_dir = 'spec/vcr_cassettes'
   config.hook_into :webmock
 
+  # Automatically tag RSpec tests with :vcr to use VCR cassettes
+  config.configure_rspec_metadata!
+
   # Filter out the Authorization header
   config.filter_sensitive_data('<AUTHORIZATION_TOKEN>') { ENV.fetch('OPENAI_ACCESS_TOKEN', nil) }
 end
