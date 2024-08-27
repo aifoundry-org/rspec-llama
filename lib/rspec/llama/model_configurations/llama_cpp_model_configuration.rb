@@ -5,7 +5,7 @@ module RSpec
     class LlamaCppModelConfiguration
       DEFAULT_TEMPERATURE = 0.5
       DEFAULT_N_PREDICT = 500
-      DEFAULT_STOP = ['<|end|>', '<|user|>', '<|assistant|>', '<|endoftext|>', '<|system|>'].freeze
+      DEFAULT_STOP = /\A<(?:end|user|assistant|endoftext|system)>\z/
 
       attr_reader :temperature, :n_predict, :stop
 

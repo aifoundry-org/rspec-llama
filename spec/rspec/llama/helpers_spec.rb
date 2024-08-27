@@ -51,20 +51,20 @@ RSpec.describe RSpec::Llama::Helpers do
           class: RSpec::Llama::LlamaCppModelConfiguration,
           temperature: 0.5,
           n_predict: 500,
-          stop: ['<|end|>', '<|user|>', '<|assistant|>', '<|endoftext|>', '<|system|>']
+          stop: /\A<(?:end|user|assistant|endoftext|system)>\z/
         )
       end
 
       it 'builds a LlamaCppModelConfiguration with given options' do
         config = helpers.build_model_configuration(
-          :llama_cpp, temperature: 0.7, n_predict: 100, stop: ['<|end|>', '<|user|>']
+          :llama_cpp, temperature: 0.7, n_predict: 100, stop: /some regexp/
         )
 
         expect(config).to have_attributes(
           class: RSpec::Llama::LlamaCppModelConfiguration,
           temperature: 0.7,
           n_predict: 100,
-          stop: ['<|end|>', '<|user|>']
+          stop: /some regexp/
         )
       end
     end
