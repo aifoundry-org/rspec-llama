@@ -4,43 +4,65 @@ module RSpec
   module Llama
     class LlamaCppModelConfiguration
       DEFAULT_TEMPERATURE = 0.5
-      DEFAULT_THREADS = 4
-      DEFAULT_N_PREDICT = -1 # Generate until context is filled
+      DEFAULT_PREDICT = 500
       DEFAULT_STOP = /\A<(?:end|user|assistant|endoftext|system)>\z/
 
-      attr_reader :model_path, :temperature, :threads, :n_predict, :stop, :additional_options
+      attr_reader :model_path, :temperature, :predict, :stop, :additional_options
 
+      # Initializes a new configuration for the llama.cpp model.
+      #
+      # @param [String] model_path The path to the model file that will be used.
+      # @param [Float] temperature The temperature for sampling, between 0 and 2. Higher values
+      #   make the output more random, while lower values make it more focused. Defaults to 0.5.
+      # @param [Integer] predict The number of tokens to predict. Defaults to 500.
+      # @param [Regexp] stop The stop token that signals the end of generation. Defaults to a regular expression
+      #   that matches common end-of-text tokens.
+      # @param [Hash] additional_options Additional configuration options, where keys are the option names and values
+      #   are either true (for flags) or values for key-value pairs. These options are passed directly to the CLI.
+      #
+      # @example Basic usage with a specific model path and default parameters
+      #   config = RSpec::Llama::LlamaCppModelConfiguration.new(
+      #     model_path: '/models/llama'
+      #   )
+      #
+      # @example Custom parameters and additional CLI options
+      #   config = RSpec::Llama::LlamaCppModelConfiguration.new(
+      #     model_path: '/models/llama',
+      #     temperature: 0.7,
+      #     predict: 300,
+      #     threads: 8,
+      #     verbose: true,
+      #     log_file: '/path/to/logfile'
+      #   )
       def initialize(
         model_path:,
         temperature: DEFAULT_TEMPERATURE,
-        threads: DEFAULT_THREADS,
-        n_predict: DEFAULT_N_PREDICT,
+        predict: DEFAULT_PREDICT,
         stop: DEFAULT_STOP,
         **additional_options
       )
         @model_path = model_path
         @temperature = temperature
-        @threads = threads
-        @n_predict = n_predict
+        @predict = predict
         @stop = stop
         @additional_options = additional_options
       end
 
+      # Converts the configuration into an array of CLI options.
+      #
+      # @return [Array<String>] An array of strings representing CLI options, where each key-value
+      #   pair or flag is converted to the appropriate format for passing to the llama.cpp executable.
+      #
+      # @example CLI options
+      #   config.to_a
+      #   # => ['--model', '/path/to/model', '--temp', '0.7', '--verbose', '--log-file', '/path/to/logfile']
       def to_a
-        cli_options = [
-          '--model', model_path,
-          '--temp', temperature.to_s,
-          '--threads', threads.to_s,
-          '--predict', n_predict.to_s
-        ]
+        cli_options = ['--model', model_path, '--temp', temperature.to_s, '--predict', predict.to_s]
 
         # Add additional options in key-value pair format
         additional_options.each do |option, value|
-          if value == true
-            cli_options << "--#{option}" # For flags
-          else
-            cli_options << "--#{option}" << value.to_s # For key-value pairs
-          end
+          cli_options << "--#{option}".tr('_', '-')
+          cli_options << value.to_s unless value == true
         end
 
         cli_options
