@@ -4,7 +4,7 @@ RSpec.describe RSpec::Llama::LlamaCppModelRunner do
   subject(:call_runner!) { described_class.new(cli_path:).call(model_configuration, model_prompt) }
 
   let(:cli_path) { 'llama-cli' }
-  let(:cli_options) { ['--model', '/models/llama', '--temp', '0.5', '--threads', '4', '--predict', '-1'] }
+  let(:cli_options) { ['--model', '/path/to/model', '--temp', '0.5', '--threads', '4', '--predict', '-1'] }
   let(:model_configuration) { instance_double(RSpec::Llama::LlamaCppModelConfiguration, to_a: cli_options) }
   let(:model_prompt) { instance_double(RSpec::Llama::ModelPrompt, message: 'Tell me about Ruby programming') }
 

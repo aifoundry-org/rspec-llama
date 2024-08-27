@@ -7,11 +7,11 @@ module RSpec
       DEFAULT_PREDICT = 500
       DEFAULT_STOP = /\A<(?:end|user|assistant|endoftext|system)>\z/
 
-      attr_reader :model_path, :temperature, :predict, :stop, :additional_options
+      attr_reader :model, :temperature, :predict, :stop, :additional_options
 
       # Initializes a new configuration for the llama.cpp model.
       #
-      # @param [String] model_path The path to the model file that will be used.
+      # @param [String] model The path to the model file that will be used.
       # @param [Float] temperature The temperature for sampling, between 0 and 2. Higher values
       #   make the output more random, while lower values make it more focused. Defaults to 0.5.
       # @param [Integer] predict The number of tokens to predict. Defaults to 500.
@@ -22,12 +22,12 @@ module RSpec
       #
       # @example Basic usage with a specific model path and default parameters
       #   config = RSpec::Llama::LlamaCppModelConfiguration.new(
-      #     model_path: '/models/llama'
+      #     model: '/path/to/model'
       #   )
       #
       # @example Custom parameters and additional CLI options
       #   config = RSpec::Llama::LlamaCppModelConfiguration.new(
-      #     model_path: '/models/llama',
+      #     model: '/path/to/model',
       #     temperature: 0.7,
       #     predict: 300,
       #     threads: 8,
@@ -35,13 +35,13 @@ module RSpec
       #     log_file: '/path/to/logfile'
       #   )
       def initialize(
-        model_path:,
+        model:,
         temperature: DEFAULT_TEMPERATURE,
         predict: DEFAULT_PREDICT,
         stop: DEFAULT_STOP,
         **additional_options
       )
-        @model_path = model_path
+        @model = model
         @temperature = temperature
         @predict = predict
         @stop = stop
@@ -57,7 +57,7 @@ module RSpec
       #   config.to_a
       #   # => ['--model', '/path/to/model', '--temp', '0.7', '--verbose', '--log-file', '/path/to/logfile']
       def to_a
-        cli_options = ['--model', model_path, '--temp', temperature.to_s, '--predict', predict.to_s]
+        cli_options = ['--model', model, '--temp', temperature.to_s, '--predict', predict.to_s]
 
         # Add additional options in key-value pair format
         additional_options.each do |option, value|
