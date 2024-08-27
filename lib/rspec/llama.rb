@@ -34,8 +34,6 @@ module RSpec
 
       # Model assertion result
       ModelAssertionResult: 'rspec/llama/model_assertion_result'
-    }.each do |class_name, path|
-      autoload class_name, path
-    end
+    }.each { |class_name, path| autoload class_name, path }
   end
 end
