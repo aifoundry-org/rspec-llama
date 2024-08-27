@@ -31,7 +31,10 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
     let(:access_token) { 'invalid_token' }
 
     it 'raises error', vcr: { cassette_name: 'openai_model_runner/invalid_access_token' } do
-      expect { call_runner! }.to raise_error
+      expect { call_runner! }.to raise_error(
+        RSpec::Llama::OpenaiModelRunner::Error,
+        'Incorrect API key provided: invalid_*oken. You can find your API key at https://platform.openai.com/account/api-keys.'
+      )
     end
   end
 end

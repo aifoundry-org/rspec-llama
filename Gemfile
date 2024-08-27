@@ -4,9 +4,6 @@ source 'https://rubygems.org'
 
 gemspec
 
-# gem 'llama_cpp'
-gem 'ruby-openai'
-
 gem 'dotenv'
 gem 'pry'
 gem 'rspec'

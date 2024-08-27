@@ -3,7 +3,7 @@
 module RSpec
   module Llama
     class OpenaiModelRunnerResult
-      MESSAGE_PATH = ['choices', 0, 'message', 'content'].freeze
+      MESSAGE_PATH = [:choices, 0, :message, :content].freeze
 
       attr_reader :response
 
