@@ -5,9 +5,10 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
 
   let(:runner_options) { { access_token: } }
   let(:model_configuration) do
-    instance_double(RSpec::Llama::OpenaiModelConfiguration, to_h: {
-                      model: 'gpt-3.5-turbo', temperature: 0.5
-                    })
+    instance_double(
+      RSpec::Llama::OpenaiModelConfiguration,
+      to_h: { model: 'gpt-3.5-turbo', temperature: 0.5 }
+    )
   end
   let(:model_prompt) do
     instance_double(RSpec::Llama::ModelPrompt, messages: ['Is Minsk the capital of Belarus?'])
@@ -20,17 +21,9 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
       VCR.use_cassette('openai_model_runner/valid_access_token') do
         result = call_runner!
 
-        expect(result).to match(
-          hash_including(
-            'choices' => [
-              hash_including(
-                'message' => hash_including(
-                  'role' => 'assistant',
-                  'content' => 'Yes, Minsk is the capital of Belarus.'
-                )
-              )
-            ]
-          )
+        expect(result).to have_attributes(
+          class: RSpec::Llama::OpenaiModelRunnerResult,
+          to_s: 'Yes, Minsk is the capital of Belarus.'
         )
       end
     end

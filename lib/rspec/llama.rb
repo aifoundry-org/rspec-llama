@@ -17,6 +17,11 @@ module RSpec
     autoload :LlamaCppModelRunner, 'rspec/llama/model_runners/llama_cpp_model_runner'
     autoload :OllamaModelRunner, 'rspec/llama/model_runners/ollama_model_runner'
 
+    # Model runner results
+    autoload :OpenaiModelRunnerResult, 'rspec/llama/model_runner_results/openai_model_runner_result'
+    autoload :LlamaCppModelRunnerResult, 'rspec/llama/model_runner_results/llama_cpp_model_runner_result'
+    autoload :OllamaModelRunnerResult, 'rspec/llama/model_runner_results/ollama_model_runner_result'
+
     # Model prompt
     autoload :ModelPrompt, 'rspec/llama/model_prompt'
 

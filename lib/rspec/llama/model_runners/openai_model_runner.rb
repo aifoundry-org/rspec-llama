@@ -20,13 +20,15 @@ module RSpec
 
       # @param [RSpec::Llama::ModelConfiguration] configuration
       # @param [RSpec::Llama::ModelPrompt] prompt
-      # @return [Hash]
+      # @return [RSpec::Llama::OpenaiModelRunnerResult]
       def call(configuration, prompt)
         messages = prompt.messages.map do |message|
           { role: 'user', content: message }
         end
 
-        client.chat(parameters: { **configuration.to_h, messages: })
+        response = client.chat(parameters: { **configuration.to_h, messages: })
+
+        RSpec::Llama::OpenaiModelRunnerResult.new(response)
       end
 
       private
