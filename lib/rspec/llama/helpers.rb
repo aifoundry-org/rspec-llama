@@ -18,8 +18,7 @@ module RSpec
       ASSERTION_TYPES = {
         exclude_all: 'ExcludeAllModelAssertion',
         include_all: 'IncludeAllModelAssertion',
-        include_any: 'IncludeAnyModelAssertion',
-        model_version: 'ModelVersionModelAssertion'
+        include_any: 'IncludeAnyModelAssertion'
       }.freeze
 
       def build_model_prompt(message)

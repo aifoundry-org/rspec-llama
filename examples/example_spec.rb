@@ -1,128 +1,58 @@
 # frozen_string_literal: true
 
+require 'bundler'
+require 'dotenv/load'
+require 'rspec/llama'
+
 RSpec.configure do |config|
-  WebMock.allow_net_connect!
-
-  config.api_endpoint = 'http://localhost:3000'
-  config.auth_endpoint = 'http://localhost:3000/users/sign_in'
-  config.api_creds = { user: { email: '***email***', password: '***password***' } }
-
-  config.include Rspec::Llama::Helpers
+  config.include RSpec::Llama::Helpers
 end
 
-RSpec.describe 'Llama Rspec flow' do
-  let(:model_version_name) { 'Version 1' }
+RSpec.describe 'RSpec::Llama::Example' do
+  subject(:assertion_result) { assertion.call(runner_result) }
 
-  context 'when we want to fetch resources' do
-    before do
-      use_model('LLAMA_C', 'Vesion C')
-      build_prompt('pt_c', 'Is Minsk the capital of Belarus?')
-      build_assertion('1_ass', 'Yes')
-      use_prompt('pt_c')
-      use_assertion('1_ass')
-    end
+  let(:prompt) { build_model_prompt('Is Minsk the capital of Belarus?') }
+  let(:assertion) { build_model_assertion(:include_any, 'Yes') }
+  let(:runner_result) { model_runner.call(model_configuration, prompt) }
 
-    it 'should fetch model & model_version' do
-      expect(settled_model['name']).to eq('LLAMA_C')
-      expect(settled_model_version['build_name']).to eq('Vesion C')
-      expect(settled_prompt['name']).to eq('pt_c')
-      expect(settled_assertion['name']).to eq('1_ass')
-    end
-  end
+  context 'with OpenAI model runner' do
+    let(:model_runner) { build_model_runner(:openai, access_token: ENV.fetch('OPENAI_ACCESS_TOKEN')) }
+    let(:model_configuration) { build_model_configuration(:openai, model:, temperature:) }
+    let(:temperature) { 0.5 }
 
-  context 'when we want to create resources(prompt, assertion)' do
-    before do
-      use_model('LLAMA_C', 'Vesion C')
-      build_prompt('pt_s', 'Is Minsk the capital of Belarus?')
-      build_assertion('ass_1', 'Yes')
-    end
+    context 'with gpt-4o-mini model' do
+      let(:model) { 'gpt-4o-mini' }
 
-    it 'should create prompt & assertion' do
-      expect(settled_prompt['name']).to eq('pt_s')
-      expect(settled_assertion['name']).to eq('ass_1')
-    end
-  end
-
-  context 'when we want to set resources' do
-    before do
-      use_model('LLAMA', model_version_name)
-      build_prompt('pt_2', 'What is the capital of France?')
-      build_assertion('ass_2', 'No')
-    end
-
-    it 'should set model, prompt, assertion' do
-      expect(settled_model['name']).to eq('LLAMA')
-      expect(settled_model_version['build_name']).to eq(model_version_name)
-      expect(settled_prompt['name']).to eq('pt_2')
-      expect(settled_assertion['name']).to eq('ass_2')
-    end
-  end
-
-  context 'when we want to create resources' do
-    before do
-      use_model('LLAMA_C', 'Vesion C')
-      build_prompt('pt_c', 'What is the capital of France?')
-      build_assertion('ass_c', 'Paris')
-    end
-
-    it 'should create model, model_version, prompt, assertion' do
-      expect(settled_model['name']).to eq('LLAMA_C')
-      expect(settled_model_version['build_name']).to eq('Vesion C')
-      expect(settled_prompt['name']).to eq('pt_c')
-      expect(settled_assertion['name']).to eq('ass_c')
-    end
-  end
-
-  describe '#execute_test_run' do
-    before do
-      use_model(model_name, model_version_name)
-      use_prompt('pt_2')
-      use_assertion('ass_2')
-    end
-
-    let(:action) { execute_test_run }
-
-    context 'model version 1' do
-      let(:model_name) { 'LLAMA' }
-      let(:model_version_name) { 'Version 2' }
-      it 'should return a completed status' do
-        action
-        expect(test_run).to be_successful
-      end
-    end
-
-    context 'model version 2' do
-      let(:model_name) { 'LLAMA' }
-      let(:model_version_name) { 'Version 2' }
-
-      it 'should return a completed status' do
-        action
-        expect(test_run).to be_successful
+      it 'supports basic syntax' do
+        expect(assertion_result).to be_passed
       end
 
-      context 'create a new prompt & assertion' do
-        before do
-          build_prompt('pt_2', 'what is the capital of france?')
-          build_assertion('ass_2', 'paris')
-        end
+      # also supports short syntax
+      it { is_expected.to be_passed }
+      it { is_expected.not_to be_failed }
+    end
 
-        it 'should return a completed status' do
-          action
-          expect(test_run).to be_failed
-        end
+    context 'with gpt-4o model' do
+      let(:model) { 'gpt-4o' }
+
+      it { is_expected.to be_passed }
+    end
+
+    context 'with gpt-4-turbo model' do
+      let(:model) { 'gpt-4-turbo' }
+
+      it { is_expected.to be_passed }
+
+      context 'with different temperature' do
+        let(:temperature) { 0.1 }
+
+        it { is_expected.to be_passed }
       end
 
-      context 'with more manual testing' do
-        before do
-          build_prompt('pt_2', 'what is the capital of france?')
-          build_assertion('ass_2', 'paris')
-        end
+      context 'with different assertion' do
+        let(:assertion) { build_model_assertion(:exclude_all, 'No') }
 
-        it 'should return a completed status' do
-          action
-          expect(settled_test_results.last['status']).to eq('completed')
-          expect(settled_assertion_results.first['state']).to eq('failed')
-        end
+        it { is_expected.to be_passed }
       end
     end
   end
