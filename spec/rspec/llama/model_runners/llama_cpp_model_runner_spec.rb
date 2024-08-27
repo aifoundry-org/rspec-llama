@@ -9,7 +9,7 @@ RSpec.describe RSpec::Llama::LlamaCppModelRunner do
   let(:model_prompt) { instance_double(RSpec::Llama::ModelPrompt, message: 'Tell me about Ruby programming') }
 
   describe '#call' do
-    it 'runs the llama-cli executable with the correct configuration and prompt' do
+    it 'runs the llama-cli executable with the correct configuration and prompt', :aggregate_failures do
       allow(IO).to receive(:popen).and_yield(StringIO.new('Ruby is a dynamic language'))
 
       result = call_runner!
@@ -18,7 +18,10 @@ RSpec.describe RSpec::Llama::LlamaCppModelRunner do
         class: RSpec::Llama::LlamaCppModelRunnerResult,
         to_s: 'Ruby is a dynamic language'
       )
-      expect(IO).to have_received(:popen).with([cli_path, '--prompt', 'Tell me about Ruby programming'] + cli_options, 'r+')
+
+      expect(IO).to have_received(:popen).with(
+        [cli_path, '--prompt', 'Tell me about Ruby programming'] + cli_options, 'r+'
+      )
     end
   end
 end
