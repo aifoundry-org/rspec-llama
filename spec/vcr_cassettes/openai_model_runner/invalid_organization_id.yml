@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo","temperature":0.5,"messages":[{"role":"user","content":"Is
+        Minsk the capital of Belarus?"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <AUTHORIZATION_TOKEN>
+      Openai-Organization:
+      - invalid_organization_id
+      Openai-Project:
+      - "<PROJECT_ID>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Wed, 28 Aug 2024 12:34:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '197'
+      Connection:
+      - keep-alive
+      Vary:
+      - Origin
+      X-Request-Id:
+      - req_3e6dfbe5bd2db3f511ca542fe8e51ae1
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=R6NMhX5cv08VEKO30_7tr6GvpIo42dVl8tQvUz1uk.8-1724848472-1.0.1.1-FG94uekYZMFkRso.M7C_Ujx48c.cbRtWEblgtBvECCcGLuGzHey6b39pu8.eT_g8I35OdCgOKNZxLHNM8xbrNA;
+        path=/; expires=Wed, 28-Aug-24 13:04:32 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=WycFRAmdb4ZOPJUl9G2RV_gT_Iy2Dqsccit2GXJGVG8-1724848472872-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8ba4560a2f8a5b12-VIE
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "error": {
+                "message": "No such organization: invalid_organization_id.",
+                "type": "invalid_request_error",
+                "param": null,
+                "code": "invalid_organization"
+            }
+        }
+  recorded_at: Wed, 28 Aug 2024 12:34:32 GMT
+recorded_with: VCR 6.3.1

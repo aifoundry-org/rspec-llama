@@ -63,5 +63,9 @@ VCR.configure do |config|
   config.configure_rspec_metadata!
 
   # Filter out the Authorization header
-  config.filter_sensitive_data('<AUTHORIZATION_TOKEN>') { ENV.fetch('OPENAI_ACCESS_TOKEN', nil) }
+  { 'authorization_token' => 'openai_access_token',
+    'organization_id' => 'openai_organization_id',
+    'project_id' => 'openai_project_id' }.each do |key, value|
+      config.filter_sensitive_data("<#{key.upcase}>") { ENV.fetch(value.upcase, nil) }
+    end
 end
