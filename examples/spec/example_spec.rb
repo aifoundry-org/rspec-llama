@@ -8,6 +8,12 @@ RSpec.configure do |config|
   config.include RSpec::Llama::Helpers
 end
 
+# Uncomment the following block to allow HTTP connections
+
+# VCR.configure do |c|
+#   c.allow_http_connections_when_no_cassette = true
+# end
+
 RSpec.describe 'RSpec::Llama example' do
   subject(:assertion_result) { assertion.call(runner_result) }
 

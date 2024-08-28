@@ -14,10 +14,11 @@ module RSpec
       # @param [String] access_token
       # @param [String] base_url
       # @param [String] organization_id
-      def initialize(access_token:, base_url: DEFAULT_BASE_URL, organization_id: nil)
+      def initialize(access_token:, base_url: DEFAULT_BASE_URL, organization_id: nil, project_id: nil)
         @access_token = access_token
         @base_url = base_url
-        @organization_id = organization_id
+        @organization_id = organization_id || ENV.fetch('OPENAI_ORGANIZATION_ID')
+        @project_id = project_id || ENV.fetch('OPENAI_PROJECT_ID')
       end
 
       # @param [RSpec::Llama::ModelConfiguration] configuration
@@ -33,12 +34,14 @@ module RSpec
 
       private
 
-      attr_reader :access_token, :base_url, :organization_id
+      attr_reader :access_token, :base_url, :organization_id, :project_id
 
       def request_headers
         {
           'Content-Type' => 'application/json',
-          'Authorization' => "Bearer #{access_token}"
+          'Authorization' => "Bearer #{access_token}",
+          'OpenAI-Organization' => organization_id,
+          'OpenAI-Project' => project_id
         }
       end
 
