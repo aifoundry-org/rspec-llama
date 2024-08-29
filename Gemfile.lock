@@ -2,8 +2,7 @@ PATH
   remote: .
   specs:
     rspec-llama (0.1.0)
-      rspec
-      zeitwerk (~> 2.6)
+      rspec (~> 3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -73,7 +72,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    zeitwerk (2.6.15)
 
 PLATFORMS
   ruby
