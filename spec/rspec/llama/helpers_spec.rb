@@ -21,7 +21,7 @@ RSpec.describe RSpec::Llama::Helpers do
       )
     end
 
-    context 'model configuration for openai' do
+    context 'with openai model configuration' do
       it 'builds an OpenaiModelConfiguration with default options' do
         config = helpers.build_model_configuration(:openai)
 
@@ -43,7 +43,7 @@ RSpec.describe RSpec::Llama::Helpers do
       end
     end
 
-    context 'model configuration for llama_cpp' do
+    context 'with llama_cpp model configuration' do
       it 'builds a LlamaCppModelConfiguration with default options' do
         config = helpers.build_model_configuration(:llama_cpp, model: '/path/to/model')
 
@@ -71,7 +71,7 @@ RSpec.describe RSpec::Llama::Helpers do
       end
     end
 
-    context 'model configuration for ollama' do
+    context 'with ollama model configuration' do
       it 'builds an OllamaModelConfiguration with default options' do
         config = helpers.build_model_configuration(:ollama)
 
