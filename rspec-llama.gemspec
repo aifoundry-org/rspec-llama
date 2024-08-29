@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.installed_by_version = '3.5.3' if s.respond_to? :installed_by_version
 
   s.add_dependency('rspec')
+  s.add_dependency('zeitwerk')
 end

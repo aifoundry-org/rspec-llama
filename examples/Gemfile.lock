@@ -3,6 +3,7 @@ PATH
   specs:
     rspec-llama (0.1.0)
       rspec
+      zeitwerk
 
 GEM
   remote: https://rubygems.org/
@@ -43,6 +44,7 @@ GEM
       faraday-multipart (>= 1)
     timeout (0.4.1)
     uri (0.13.1)
+    zeitwerk (2.6.17)
 
 PLATFORMS
   arm64-darwin-23
