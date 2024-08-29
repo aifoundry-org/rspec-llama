@@ -17,8 +17,8 @@ module RSpec
       def initialize(access_token:, base_url: DEFAULT_BASE_URL, organization_id: nil, project_id: nil)
         @access_token = access_token
         @base_url = base_url
-        @organization_id = organization_id || ENV.fetch('OPENAI_ORGANIZATION_ID')
-        @project_id = project_id || ENV.fetch('OPENAI_PROJECT_ID')
+        @organization_id = organization_id
+        @project_id = project_id
       end
 
       # @param [RSpec::Llama::ModelConfiguration] configuration
@@ -42,7 +42,7 @@ module RSpec
           'Authorization' => "Bearer #{access_token}",
           'OpenAI-Organization' => organization_id,
           'OpenAI-Project' => project_id
-        }
+        }.compact
       end
 
       def execute_request(path, params)

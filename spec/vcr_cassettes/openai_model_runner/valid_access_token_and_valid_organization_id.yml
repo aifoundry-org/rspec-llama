@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo","temperature":0.5,"messages":[{"role":"user","content":"Is
+        Minsk the capital of Belarus?"}]}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <AUTHORIZATION_TOKEN>
+      Openai-Organization:
+      - "<ORGANIZATION_ID>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.openai.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 29 Aug 2024 09:46:31 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - user-sqdvq4nfe2abje7fayiynr2m
+      Openai-Processing-Ms:
+      - '235'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '199975'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 7ms
+      X-Request-Id:
+      - req_ecd96b222bffbba548c0ccd1ca74a0a3
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=E1.HCM5bAz2xLjoFgYrxHw2cPEVh_V9ZXXjnHBoRuho-1724924791-1.0.1.1-KVg2iUKstw7cJJ9B3aumhlSTdU3h9o3.aFK63sj9dkfC2NN3a1DZXK.bLyzesxP6r7lAVjljDbo9OAMPpP39Pw;
+        path=/; expires=Thu, 29-Aug-24 10:16:31 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=lp6KGE0qtDMA48ngfW2PgX6G4Cl09E0fde8HoFo.Oyc-1724924791980-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8bab9d466a422dc9-TBS
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-A1W1XtAjSnbhHtB2rUg2sd92Elam8",
+          "object": "chat.completion",
+          "created": 1724924791,
+          "model": "gpt-3.5-turbo-0125",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Yes, Minsk is the capital of Belarus.",
+                "refusal": null
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 15,
+            "completion_tokens": 10,
+            "total_tokens": 25
+          },
+          "system_fingerprint": null
+        }
+  recorded_at: Thu, 29 Aug 2024 09:46:31 GMT
+recorded_with: VCR 6.3.1
