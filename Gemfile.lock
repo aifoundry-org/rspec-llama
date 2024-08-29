@@ -3,7 +3,7 @@ PATH
   specs:
     rspec-llama (0.1.0)
       rspec
-      zeitwerk
+      zeitwerk (~> 2.6)
 
 GEM
   remote: https://rubygems.org/
