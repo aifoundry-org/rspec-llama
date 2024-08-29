@@ -11,4 +11,4 @@ RSpec/SpecFilePathFormat:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.3.0
+  TargetRubyVersion: 3.2
