@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     rspec-llama (0.1.0)
-      rspec
+      rspec (~> 3.0)
       zeitwerk (~> 2.6)
 
 GEM
