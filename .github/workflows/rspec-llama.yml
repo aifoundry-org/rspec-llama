@@ -1,0 +1,27 @@
+name: rspec-llama
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Run RSpec and Rubocop
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.0
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run Rubocop
+        run: bundle exec rubocop
+
+      - name: Run RSpec
+        run: bundle exec rspec
