@@ -12,3 +12,7 @@ RSpec/SpecFilePathFormat:
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.2
+
+Naming/FileName:
+  Exclude:
+    - 'lib/rspec-llama.rb'
