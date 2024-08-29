@@ -31,8 +31,4 @@ jobs:
         run: bundle exec rubocop
 
       - name: Run RSpec
-        env:
-          OPENAI_ACCESS_TOKEN: ${{ secrets.OPENAI_ACCESS_TOKEN }}
-          OPENAI_ORGANIZATION_ID: ${{ secrets.OPENAI_ORGANIZATION_ID }}
-          OPENAI_PROJECT_ID: ${{ secrets.OPENAI_PROJECT_ID }}
         run: bundle exec rspec
