@@ -17,6 +17,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 3.2'
   s.summary = 'Write a short summary, because RubyGems requires one.'
 
-  s.add_dependency('rspec')
+  s.add_dependency('rspec', '~> 3.0')
   s.add_dependency('zeitwerk', '~> 2.6')
 end
