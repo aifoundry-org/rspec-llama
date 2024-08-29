@@ -18,5 +18,4 @@ Gem::Specification.new do |s|
   s.summary = 'Write a short summary, because RubyGems requires one.'
 
   s.add_dependency('rspec', '~> 3.0')
-  s.add_dependency('zeitwerk', '~> 2.6')
 end
