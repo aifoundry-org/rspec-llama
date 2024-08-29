@@ -37,3 +37,7 @@ module RSpec
     }.each { |class_name, path| autoload class_name, path }
   end
 end
+
+RSpec.configure do |config|
+  config.include RSpec::Llama::Helpers
+end
