@@ -6,6 +6,9 @@ require:
 Style/Documentation:
   Enabled: false
 
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.3.0
