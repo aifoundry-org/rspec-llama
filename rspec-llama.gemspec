@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.files = Dir['CODE_OF_CONDUCT.md', 'LICENSE.txt', 'README.md', 'lib/**/*.rb']
   s.homepage = 'https://example.com'
   s.licenses = ['MIT']
-  s.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
+  s.required_ruby_version = '>= 3.2'
   s.summary = 'Write a short summary, because RubyGems requires one.'
 
   s.installed_by_version = '3.5.3' if s.respond_to? :installed_by_version
