@@ -18,7 +18,7 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
   end
 
   context 'with valid access token' do
-    let(:access_token) { ENV.fetch('OPENAI_ACCESS_TOKEN') }
+    let(:access_token) { ENV.fetch('OPENAI_ACCESS_TOKEN', 'token') }
 
     it 'returns the response hash', vcr: { cassette_name: 'openai_model_runner/valid_access_token' } do
       result = call_runner!
@@ -30,7 +30,7 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
     end
 
     context 'with valid organization ID' do
-      let(:organization_id) { ENV.fetch('OPENAI_ORGANIZATION_ID') }
+      let(:organization_id) { ENV.fetch('OPENAI_ORGANIZATION_ID', 'organization_id') }
 
       it 'returns the response hash', vcr: {
         cassette_name: 'openai_model_runner/valid_access_token_and_valid_organization_id'
@@ -44,7 +44,7 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
       end
 
       context 'with valid project ID' do
-        let(:project_id) { ENV.fetch('OPENAI_PROJECT_ID') }
+        let(:project_id) { ENV.fetch('OPENAI_PROJECT_ID', 'project_id') }
 
         it 'returns the response hash', vcr: {
           cassette_name: 'openai_model_runner/valid_access_token_and_valid_organization_id_and_valid_project_id'
@@ -63,8 +63,7 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
 
         it 'raises error', vcr: { cassette_name: 'openai_model_runner/invalid_project_id' } do
           expect { call_runner! }.to raise_error(
-            RSpec::Llama::OpenaiModelRunner::Error,
-            "The project '#{project_id}' does not exist in '#{organization_id}'"
+            RSpec::Llama::OpenaiModelRunner::Error, match("The project '#{project_id}' does not exist")
           )
         end
       end

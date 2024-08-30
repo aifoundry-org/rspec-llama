@@ -4,11 +4,7 @@ require 'bundler/setup'
 require 'dotenv/load'
 require 'rspec/llama'
 
-RSpec.configure do |config|
-  config.include RSpec::Llama::Helpers
-end
-
-RSpec.describe 'RSpec::Llama example' do
+RSpec.describe RSpec::Llama do
   subject(:assertion_result) { assertion.call(runner_result) }
 
   let(:prompt) { build_model_prompt('Is Minsk the capital of Belarus?') }

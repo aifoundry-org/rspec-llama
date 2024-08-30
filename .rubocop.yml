@@ -6,6 +6,13 @@ require:
 Style/Documentation:
   Enabled: false
 
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.3.0
+  TargetRubyVersion: 3.2
+
+Naming/FileName:
+  Exclude:
+    - 'lib/rspec-llama.rb'
