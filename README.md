@@ -351,7 +351,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/aifoun
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
 
 ## Code of Conduct
 

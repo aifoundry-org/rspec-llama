@@ -22,9 +22,9 @@ Gem::Specification.new do |s|
     models' outputs, RSpec::Llama offers an all-in-one solution that integrates smoothly into your existing RSpec setup.
   DESC
   s.email = ['vadser1999@gmail.com']
-  s.files = Dir['CODE_OF_CONDUCT.md', 'LICENSE.txt', 'README.md', 'lib/**/*.rb']
+  s.files = Dir['CODE_OF_CONDUCT.md', 'LICENSE', 'README.md', 'lib/**/*.rb']
   s.homepage = 'https://github.com/aifoundry-org/rspec-llama'
-  s.licenses = ['MIT']
+  s.license = 'Apache-2.0'
   s.required_ruby_version = '>= 3.2'
   s.summary = 'A versatile testing framework for different AI model configurations.'
 
