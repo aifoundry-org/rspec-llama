@@ -120,5 +120,14 @@ RSpec.describe RSpec::Llama::Helpers do
         class: RSpec::Llama::OpenaiModelRunner
       )
     end
+
+    it 'builds a LlamafileModelRunner' do
+      runner = helpers.build_model_runner(:llamafile, cli_path: '/path/to/llamafile')
+
+      expect(runner).to have_attributes(
+        class: RSpec::Llama::LlamafileModelRunner,
+        cli_path: '/path/to/llamafile'
+      )
+    end
   end
 end
