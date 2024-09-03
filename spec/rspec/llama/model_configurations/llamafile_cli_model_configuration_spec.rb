@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RSpec::Llama::LlamafileModelConfiguration do
+RSpec.describe RSpec::Llama::LlamafileCliModelConfiguration do
   describe '#initialize' do
     it 'initializes with default options' do
       config = described_class.new

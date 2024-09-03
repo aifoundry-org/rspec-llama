@@ -2,7 +2,7 @@
 
 module RSpec
   module Llama
-    class LlamafileModelRunnerResult
+    class LlamafileCliModelRunnerResult
       attr_reader :result
 
       def initialize(result)

@@ -60,12 +60,12 @@ RSpec.describe RSpec::Llama::Helpers do
       end
     end
 
-    context 'with llamafile model configuration' do
-      it 'builds a LlamafileModelConfiguration with default options' do
-        config = helpers.build_model_configuration(:llamafile)
+    context 'with llamafile_cli model configuration' do
+      it 'builds a LlamafileCliModelConfiguration with default options' do
+        config = helpers.build_model_configuration(:llamafile_cli)
 
         expect(config).to have_attributes(
-          class: RSpec::Llama::LlamafileModelConfiguration,
+          class: RSpec::Llama::LlamafileCliModelConfiguration,
           temperature: 0.5,
           predict: 500
         )
@@ -73,11 +73,11 @@ RSpec.describe RSpec::Llama::Helpers do
 
       it 'builds a LlamaCppModelConfiguration with given options' do
         config = helpers.build_model_configuration(
-          :llamafile, temperature: 0.7, threads: 8, predict: 100
+          :llamafile_cli, temperature: 0.7, threads: 8, predict: 100
         )
 
         expect(config).to have_attributes(
-          class: RSpec::Llama::LlamafileModelConfiguration,
+          class: RSpec::Llama::LlamafileCliModelConfiguration,
           temperature: 0.7,
           predict: 100,
           additional_options: { threads: 8 }
@@ -121,12 +121,12 @@ RSpec.describe RSpec::Llama::Helpers do
       )
     end
 
-    it 'builds a LlamafileModelRunner' do
-      runner = helpers.build_model_runner(:llamafile, cli_path: '/path/to/llamafile')
+    it 'builds a LlamafileCliModelRunner' do
+      runner = helpers.build_model_runner(:llamafile_cli, path: '/path/to/llamafile')
 
       expect(runner).to have_attributes(
-        class: RSpec::Llama::LlamafileModelRunner,
-        cli_path: '/path/to/llamafile'
+        class: RSpec::Llama::LlamafileCliModelRunner,
+        path: '/path/to/llamafile'
       )
     end
   end

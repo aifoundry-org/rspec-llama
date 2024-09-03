@@ -2,7 +2,7 @@
 
 module RSpec
   module Llama
-    class LlamafileModelConfiguration
+    class LlamafileCliModelConfiguration
       DEFAULT_TEMPERATURE = 0.5
       DEFAULT_PREDICT = 500
 
@@ -18,10 +18,10 @@ module RSpec
       #   are either true (for flags) or values for key-value pairs. These options are passed directly to the CLI.
       #
       # @example Basic usage with a specific model path and default parameters
-      #   config = RSpec::Llama::LlamafileModelConfiguration.new
+      #   config = RSpec::Llama::LlamafileCliModelConfiguration.new
       #
       # @example Custom parameters and additional CLI options
-      #   config = RSpec::Llama::LlamafileModelConfiguration.new(
+      #   config = RSpec::Llama::LlamafileCliModelConfiguration.new(
       #     temperature: 0.7, predict: 300, threads: 8
       #   )
       def initialize(

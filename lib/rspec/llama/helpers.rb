@@ -7,14 +7,14 @@ module RSpec
         openai: 'OpenaiModelRunner',
         ollama: 'OllamaModelRunner',
         llama_cpp: 'LlamaCppModelRunner',
-        llamafile: 'LlamafileModelRunner'
+        llamafile_cli: 'LlamafileCliModelRunner'
       }.freeze
 
       CONFIGURATION_TYPES = {
         openai: 'OpenaiModelConfiguration',
         ollama: 'OllamaModelConfiguration',
         llama_cpp: 'LlamaCppModelConfiguration',
-        llamafile: 'LlamafileModelConfiguration'
+        llamafile_cli: 'LlamafileCliModelConfiguration'
       }.freeze
 
       ASSERTION_TYPES = {
