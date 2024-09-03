@@ -5,16 +5,14 @@ module RSpec
     class LlamafileModelConfiguration
       DEFAULT_TEMPERATURE = 0.5
       DEFAULT_PREDICT = 500
-      DEFAULT_STOP = /\A\[end of text\]\z/
 
-      attr_reader :temperature, :predict, :stop, :additional_options
+      attr_reader :temperature, :predict, :additional_options
 
       # Initializes a new configuration for the llamafile model.
       #
       # @param [Float] temperature The temperature for sampling, between 0 and 2. Higher values
       #   make the output more random, while lower values make it more focused. Defaults to 0.5.
       # @param [Integer] predict The number of tokens to predict. Defaults to 500.
-      # @param [Regexp] stop The stop token that signals the end of generation. Defaults to a regular expression
       #   that matches common end-of-text tokens.
       # @param [Hash] additional_options Additional configuration options, where keys are the option names and values
       #   are either true (for flags) or values for key-value pairs. These options are passed directly to the CLI.
@@ -24,21 +22,15 @@ module RSpec
       #
       # @example Custom parameters and additional CLI options
       #   config = RSpec::Llama::LlamafileModelConfiguration.new(
-      #     temperature: 0.7,
-      #     predict: 300,
-      #     threads: 8,
-      #     multiline_input: true,
-      #     log_file: '/path/to/logfile'
+      #     temperature: 0.7, predict: 300, threads: 8
       #   )
       def initialize(
         temperature: DEFAULT_TEMPERATURE,
         predict: DEFAULT_PREDICT,
-        stop: DEFAULT_STOP,
         **additional_options
       )
         @temperature = temperature
         @predict = predict
-        @stop = stop
         @additional_options = additional_options
       end
 
