@@ -48,7 +48,7 @@ This helper supports different types of model configurations, such as OpenAI's G
 
 Parameters:
 
-`configuration_type`: Symbol representing the type of model configuration. Possible values are `:openai`, `:llama_cpp`, and `:ollama`.
+`configuration_type`: Symbol representing the type of model configuration. Possible values are `:openai`, `:llama_cpp`, `:llamafile`, and `:ollama`.
 
 `options`: Hash of configuration options specific to the selected model type.
 
@@ -103,6 +103,25 @@ Supported Options:
 
 `stop`: Regular expression to define where the model should stop generating text.
 
+#### Llamafile Model Configuration
+
+The Llamafile model configuration is used to set parameters for models running with the llamafile implementation.
+
+```ruby
+config = build_model_configuration(:llamafile, temperature: 0.5, predict: 500)
+
+# Example usage
+model_runner = build_model_runner(:llamafile, cli_path: '/path/to/llamafile')
+prompt = build_model_prompt('Describe the Eiffel Tower.')
+result = model_runner.call(config, prompt)
+```
+
+Supported Options:
+
+`temperature`: Sampling temperature between 0 and 2.
+
+`predict`: The number of tokens to predict.
+
 #### Ollama Model Configuration
 
 The Ollama model configuration is similar to the OpenAI and LlamaCpp configurations but tailored to the Ollama models.
@@ -130,7 +149,7 @@ such as those for OpenAI's GPT models, Llama models, and others.
 
 Parameters:
 
-`runner_type`: Symbol representing the type of model runner. Possible values are `:openai`, `:llama_cpp`, and `:ollama`.
+`runner_type`: Symbol representing the type of model runner. Possible values are `:openai`, `:llama_cpp`, `:llamafile`, and `:ollama`.
 
 `options`: Hash of options specific to the selected runner type, such as API credentials or executable paths.
 
@@ -145,7 +164,7 @@ runner = build_model_runner(:openai, access_token: ENV['OPENAI_ACCESS_TOKEN'], o
 config = build_model_configuration(:openai, model: 'gpt-4', temperature: 0.7)
 prompt = 'What is the capital of France?'
 result = runner.call(config, prompt)
-puts result.to_s
+puts result.to_s # => The capital of France is Paris.
 ```
 
 Supported Options:
@@ -159,6 +178,21 @@ Supported Options:
 #### LlamaCpp Model Runner
 
 coming soon
+
+#### Llamafile Model Runner
+
+The Llamafile model runner executes prompts locally using the Llamafile executable, allowing you to run large language models without relying on external APIs.
+For more information about Llamafile, visit the [Llamafile GitHub repository](https://github.com/Mozilla-Ocho/llamafile).
+
+```ruby
+runner = build_model_runner(:llamafile, cli_path: '/path/to/llamafile')
+
+# Example usage
+config = build_model_configuration(:llamafile, temperature: 0.7, predict: 300, threads: 8)
+prompt = build_model_prompt('What is the capital of France?')
+result = runner.call(config, prompt)
+puts result.to_s # => The capital of France is Paris.
+```
 
 #### Ollama Model Runner
 
