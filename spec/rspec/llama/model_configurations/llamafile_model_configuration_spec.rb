@@ -22,7 +22,7 @@ RSpec.describe RSpec::Llama::LlamafileModelConfiguration do
       config = described_class.new(temperature: 0.7, threads: 8, predict: 200)
 
       expect(config.to_a).to eq(
-        ['--cli', '--silent-prompt', '--temp', '0.7', '--n-predict', '200', '--threads', '8']
+        ['--cli', '--silent-prompt', '--log-disable', '--temp', '0.7', '--n-predict', '200', '--threads', '8']
       )
     end
   end
