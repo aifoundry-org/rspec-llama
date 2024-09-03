@@ -43,7 +43,9 @@ module RSpec
       #   config.to_a
       #   # => ['--cli', '--silent-prompt', '--temp', '0.7', '--n-predict', '500']
       def to_a
-        cli_options = ['--cli', '--silent-prompt', '--temp', temperature.to_s, '--n-predict', predict.to_s]
+        cli_options = [
+          '--cli', '--silent-prompt', '--log-disable', '--temp', temperature.to_s, '--n-predict', predict.to_s
+        ]
 
         # Add additional options in key-value pair format
         additional_options.each do |option, value|

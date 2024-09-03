@@ -4,7 +4,7 @@ RSpec.describe RSpec::Llama::LlamafileModelRunner do
   subject(:call_runner!) { described_class.new(cli_path:).call(model_configuration, model_prompt) }
 
   let(:cli_path) { './llava-v1.5-7b-q4.llamafile' }
-  let(:cli_options) { ['--cli', '--silent-prompt', '--temp', '0.1', '--seed', '20'] }
+  let(:cli_options) { ['--cli', '--silent-prompt', '--log-disable', '--temp', '0.1', '--seed', '20'] }
   let(:model_configuration) { instance_double(RSpec::Llama::LlamafileModelConfiguration, to_a: cli_options) }
   let(:model_prompt) { instance_double(RSpec::Llama::ModelPrompt, message: model_prompt_message) }
   let(:model_prompt_message) { 'Who created the Ruby language?' }
