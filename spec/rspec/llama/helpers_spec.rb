@@ -60,6 +60,31 @@ RSpec.describe RSpec::Llama::Helpers do
       end
     end
 
+    context 'with llamafile model configuration' do
+      it 'builds a LlamafileModelConfiguration with default options' do
+        config = helpers.build_model_configuration(:llamafile)
+
+        expect(config).to have_attributes(
+          class: RSpec::Llama::LlamafileModelConfiguration,
+          temperature: 0.5,
+          predict: 500
+        )
+      end
+
+      it 'builds a LlamaCppModelConfiguration with given options' do
+        config = helpers.build_model_configuration(
+          :llamafile, temperature: 0.7, threads: 8, predict: 100
+        )
+
+        expect(config).to have_attributes(
+          class: RSpec::Llama::LlamafileModelConfiguration,
+          temperature: 0.7,
+          predict: 100,
+          additional_options: { threads: 8 }
+        )
+      end
+    end
+
     context 'with ollama model configuration' do
       it 'builds an OllamaModelConfiguration with default options' do
         config = helpers.build_model_configuration(:ollama)
