@@ -73,4 +73,12 @@ RSpec.describe 'Popular Application Frameworks' do
       end
     end
   end
+
+  context 'with Llamafile model runner' do
+    let(:runner) { build_model_runner(:llamafile, cli_path: ENV.fetch('LLAMAFILE_PATH')) }
+    let(:config) { build_model_configuration(:llamafile, temperature:, seed: RSpec.configuration.seed) }
+    let(:temperature) { 0.5 }
+
+    include_examples 'application frameworks'
+  end
 end
