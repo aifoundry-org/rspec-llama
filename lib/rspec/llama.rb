@@ -26,7 +26,7 @@ module RSpec
       OllamaModelRunnerResult: 'rspec/llama/model_runner_results/ollama_model_runner_result',
 
       # Model prompt
-      ModelPrompt: 'rspec/llama/model_prompt',
+      ModelPrompt: 'rspec/llama/model_prompt'
     }.each { |class_name, path| autoload class_name, path }
   end
 end

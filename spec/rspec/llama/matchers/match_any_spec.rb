@@ -16,7 +16,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAny do
       it 'returns correct negated failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message_when_negated).to eq(
-          "expected that #{actual.inspect} would not match any of #{expected.inspect}, but it matched some."
+          "expected #{actual.inspect} not to match any of #{expected.inspect}, but it matched some."
         )
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAny do
       it 'returns correct failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message).to eq(
-          "expected that #{actual.inspect} would match any of #{expected.inspect}, but none of them matched."
+          "expected #{actual.inspect} to match any of #{expected.inspect}, but none of them matched."
         )
       end
     end
@@ -48,7 +48,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAny do
       it 'returns correct negated failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message_when_negated).to eq(
-          "expected that #{actual.inspect} would not match any of #{expected.inspect}, but it matched some."
+          "expected #{actual.inspect} not to match any of #{expected.inspect}, but it matched some."
         )
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAny do
       it 'returns correct failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message).to eq(
-          "expected that #{actual.inspect} would match any of #{expected.inspect}, but none of them matched."
+          "expected #{actual.inspect} to match any of #{expected.inspect}, but none of them matched."
         )
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAny do
       it 'returns correct negated failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message_when_negated).to eq(
-          "expected that #{actual.inspect} would not match any of #{expected.inspect}, but it matched some."
+          "expected #{actual.inspect} not to match any of #{expected.inspect}, but it matched some."
         )
       end
     end
@@ -95,7 +95,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAny do
       it 'returns correct failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message).to eq(
-          "expected that #{actual.inspect} would match any of #{expected.inspect}, but none of them matched."
+          "expected #{actual.inspect} to match any of #{expected.inspect}, but none of them matched."
         )
       end
     end
@@ -112,7 +112,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAny do
     it 'returns correct failure message' do
       matcher.matches?(actual)
       expect(matcher.failure_message).to eq(
-        "expected that #{actual.inspect} would match any of #{expected.inspect}, but none of them matched."
+        "expected #{actual.inspect} to match any of #{expected.inspect}, but none of them matched."
       )
     end
   end
@@ -128,7 +128,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAny do
     it 'returns correct negated failure message' do
       matcher.matches?(actual)
       expect(matcher.failure_message_when_negated).to eq(
-        "expected that #{actual.to_s.inspect} would not match any of #{expected.inspect}, but it matched some."
+        "expected #{actual.to_s.inspect} not to match any of #{expected.inspect}, but it matched some."
       )
     end
   end

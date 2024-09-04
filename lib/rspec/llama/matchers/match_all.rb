@@ -16,12 +16,12 @@ module RSpec
         end
 
         def failure_message
-          "expected that #{@actual.to_s.inspect} would match all of #{@expected.inspect}, " \
+          "expected #{@actual.to_s.inspect} to match all of #{@expected.inspect}, " \
             "but it did not match: #{@unmatched_values.inspect}"
         end
 
         def failure_message_when_negated
-          "expected that #{@actual.to_s.inspect} would not match all of #{@expected.inspect}, but it matched all."
+          "expected #{@actual.to_s.inspect} not to match all of #{@expected.inspect}, but it matched all."
         end
       end
     end

@@ -16,7 +16,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAll do
       it 'returns correct negated failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message_when_negated).to eq(
-          "expected that #{actual.inspect} would not match all of #{expected.inspect}, but it matched all."
+          "expected #{actual.inspect} not to match all of #{expected.inspect}, but it matched all."
         )
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAll do
       it 'returns correct failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message).to eq(
-          "expected that #{actual.inspect} would match all of #{expected.inspect}, but it did not match: [\"baz\"]"
+          "expected #{actual.inspect} to match all of #{expected.inspect}, but it did not match: [\"baz\"]"
         )
       end
     end
@@ -48,7 +48,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAll do
       it 'returns correct negated failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message_when_negated).to eq(
-          "expected that #{actual.inspect} would not match all of #{expected.inspect}, but it matched all."
+          "expected #{actual.inspect} not to match all of #{expected.inspect}, but it matched all."
         )
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAll do
       it 'returns correct failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message).to eq(
-          "expected that #{actual.inspect} would match all of #{expected.inspect}, but it did not match: [/baz/]"
+          "expected #{actual.inspect} to match all of #{expected.inspect}, but it did not match: [/baz/]"
         )
       end
     end
@@ -80,7 +80,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAll do
       it 'returns correct negated failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message_when_negated).to eq(
-          "expected that #{actual.inspect} would not match all of #{expected.inspect}, but it matched all."
+          "expected #{actual.inspect} not to match all of #{expected.inspect}, but it matched all."
         )
       end
     end
@@ -95,7 +95,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAll do
       it 'returns correct failure message' do
         matcher.matches?(actual)
         expect(matcher.failure_message).to eq(
-          "expected that #{actual.inspect} would match all of #{expected.inspect}, but it did not match: [/baz/]"
+          "expected #{actual.inspect} to match all of #{expected.inspect}, but it did not match: [/baz/]"
         )
       end
     end
@@ -112,7 +112,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAll do
     it 'returns correct failure message' do
       matcher.matches?(actual)
       expect(matcher.failure_message).to eq(
-        "expected that #{actual.inspect} would match all of #{expected.inspect}, but it did not match: [\"foo\", \"bar\"]"
+        "expected #{actual.inspect} to match all of #{expected.inspect}, but it did not match: [\"foo\", \"bar\"]"
       )
     end
   end
@@ -128,7 +128,7 @@ RSpec.describe RSpec::Llama::Matchers::MatchAll do
     it 'returns correct negated failure message' do
       matcher.matches?(actual)
       expect(matcher.failure_message_when_negated).to eq(
-        "expected that #{actual.to_s.inspect} would not match all of #{expected.inspect}, but it matched all."
+        "expected #{actual.to_s.inspect} not to match all of #{expected.inspect}, but it matched all."
       )
     end
   end
