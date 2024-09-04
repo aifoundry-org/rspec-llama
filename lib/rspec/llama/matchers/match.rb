@@ -22,6 +22,12 @@ module RSpec
 
           "expected #{@actual.to_s.inspect} not to match #{@expected.inspect}"
         end
+
+        def diffable?
+          return super unless @actual.is_a?(RSpec::Llama::BaseModelRunnerResult)
+
+          false
+        end
       end
     end
   end
