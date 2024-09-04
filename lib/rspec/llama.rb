@@ -23,10 +23,7 @@ module RSpec
       BaseModelRunnerResult: 'rspec/llama/model_runner_results/base_model_runner_result',
       OpenaiModelRunnerResult: 'rspec/llama/model_runner_results/openai_model_runner_result',
       LlamaCppModelRunnerResult: 'rspec/llama/model_runner_results/llama_cpp_model_runner_result',
-      OllamaModelRunnerResult: 'rspec/llama/model_runner_results/ollama_model_runner_result',
-
-      # Model prompt
-      ModelPrompt: 'rspec/llama/model_prompt'
+      OllamaModelRunnerResult: 'rspec/llama/model_runner_results/ollama_model_runner_result'
     }.each { |class_name, path| autoload class_name, path }
   end
 end

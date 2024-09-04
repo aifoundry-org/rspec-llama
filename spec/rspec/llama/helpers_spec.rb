@@ -3,17 +3,6 @@
 RSpec.describe RSpec::Llama::Helpers do
   subject(:helpers) { Class.new { include RSpec::Llama::Helpers }.new }
 
-  describe '#build_model_prompt' do
-    it 'builds a ModelPrompt with a message' do
-      prompt = helpers.build_model_prompt('What is the capital of France?')
-
-      expect(prompt).to have_attributes(
-        class: RSpec::Llama::ModelPrompt,
-        message: 'What is the capital of France?'
-      )
-    end
-  end
-
   describe '#build_model_configuration' do
     it 'raises an error for unsupported configuration type' do
       expect { helpers.build_model_configuration(:unsupported) }.to raise_error(

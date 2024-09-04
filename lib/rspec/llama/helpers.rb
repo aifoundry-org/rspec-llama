@@ -21,10 +21,6 @@ module RSpec
         include_any: 'IncludeAnyModelAssertion'
       }.freeze
 
-      def build_model_prompt(message)
-        ModelPrompt.new(message)
-      end
-
       def build_model_configuration(configuration_type, **)
         configuration_class = CONFIGURATION_TYPES[configuration_type.to_sym]
         raise "Unsupported model configuration type: #{configuration_type}" unless configuration_class
