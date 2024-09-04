@@ -107,39 +107,4 @@ RSpec.describe RSpec::Llama::Helpers do
       )
     end
   end
-
-  describe '#build_model_assertion' do
-    it 'raises an error for unsupported assertion type' do
-      expect { helpers.build_model_assertion(:unsupported, 'value') }.to raise_error(
-        'Unsupported assertion type: unsupported'
-      )
-    end
-
-    it 'builds an IncludeAllModelAssertion' do
-      assertion = helpers.build_model_assertion(:include_all, 'Expected Text')
-
-      expect(assertion).to have_attributes(
-        class: RSpec::Llama::IncludeAllModelAssertion,
-        values: ['Expected Text']
-      )
-    end
-
-    it 'builds an IncludeAnyModelAssertion' do
-      assertion = helpers.build_model_assertion(:include_any, 'Expected Text')
-
-      expect(assertion).to have_attributes(
-        class: RSpec::Llama::IncludeAnyModelAssertion,
-        values: ['Expected Text']
-      )
-    end
-
-    it 'builds an ExcludeAllModelAssertion' do
-      assertion = helpers.build_model_assertion(:exclude_all, 'Expected Text')
-
-      expect(assertion).to have_attributes(
-        class: RSpec::Llama::ExcludeAllModelAssertion,
-        values: ['Expected Text']
-      )
-    end
-  end
 end

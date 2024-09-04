@@ -6,6 +6,9 @@ require:
 Style/Documentation:
   Enabled: false
 
+Style/SelectByRegexp:
+  Enabled: false
+
 RSpec/SpecFilePathFormat:
   Enabled: false
 

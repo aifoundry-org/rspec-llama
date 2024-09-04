@@ -38,13 +38,6 @@ module RSpec
 
         RSpec::Llama.const_get(runner_class).new(**)
       end
-
-      def build_model_assertion(assertion_type, value, *other_values)
-        assertion_class = ASSERTION_TYPES[assertion_type.to_sym]
-        raise "Unsupported assertion type: #{assertion_type}" unless assertion_class
-
-        RSpec::Llama.const_get(assertion_class).new(value, *other_values)
-      end
     end
   end
 end
