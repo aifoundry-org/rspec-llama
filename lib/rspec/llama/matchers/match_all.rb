@@ -8,6 +8,10 @@ module RSpec
           @expected = expected
         end
 
+        def description
+          "match all of #{@expected.inspect}"
+        end
+
         def matches?(actual)
           @actual = actual
           @unmatched_values = @expected.reject { |exp| @actual.to_s.match?(exp) }
