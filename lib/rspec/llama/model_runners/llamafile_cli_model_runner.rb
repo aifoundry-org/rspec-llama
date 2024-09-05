@@ -12,11 +12,11 @@ module RSpec
       # Runs the model with the given configuration and prompt.
       #
       # @param [RSpec::Llama::LlamafileCliModelConfiguration] configuration
-      # @param [RSpec::Llama::ModelPrompt] prompt
+      # @param [String] prompt
       #
       # @return [RSpec::Llama::LlamafileCliModelRunnerResult]
       def call(configuration, prompt)
-        command = [path, '--prompt', prompt.message] + configuration.to_a
+        command = [path, '--prompt', prompt.to_s] + configuration.to_a
 
         IO.popen(command, 'r+') do |io|
           LlamafileCliModelRunnerResult.new(io.read)
