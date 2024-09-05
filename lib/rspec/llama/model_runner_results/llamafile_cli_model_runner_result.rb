@@ -2,15 +2,9 @@
 
 module RSpec
   module Llama
-    class LlamafileCliModelRunnerResult
-      attr_reader :result
-
-      def initialize(result)
-        @result = result
-      end
-
+    class LlamafileCliModelRunnerResult < BaseModelRunnerResult
       def to_s
-        result.strip
+        response.strip
       end
     end
   end
