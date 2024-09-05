@@ -17,6 +17,9 @@ Style/WordArray:
 Style/SelectByRegexp:
   Enabled: false
 
+RSpec/DescribeClass:
+  Enabled: false
+
 RSpec/SpecFilePathFormat:
   Enabled: false
 
