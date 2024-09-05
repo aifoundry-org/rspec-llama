@@ -9,9 +9,10 @@
 
 ## Features
 
-- **Model Configurations**: Easily set up configurations for different AI models like OpenAI, Llama, and Ollama.
-- **Model Runners**: Execute model interactions and capture responses seamlessly.
-- **Comprehensive Assertions**: Validate model outputs against expected patterns using a variety of assertion types.
+- **Model Configurations**: Easily set up and customize configurations for various AI models like OpenAI, Llama, and Ollama. Configure models with parameters such as temperature, token limits, and stop sequences.
+- **Model Runners**: Seamlessly run AI models using predefined configurations, allowing you to execute prompts and capture their outputs in a simple and consistent way.
+- **Comprehensive Assertions**: Validate model outputs against expected results using advanced matchers, such as `match`, `match_all`, `match_any`, and `match_none`, to ensure your models behave as expected in different scenarios.
+- **RSpec Integration**: Fully integrated with RSpec, enabling AI model testing to fit naturally into your existing test suite.
 
 ## Installation
 
@@ -35,26 +36,9 @@ $ gem install rspec-llama
 
 ## RSpec Helpers
 
-### `build_model_prompt(message)`
-
-The `build_model_prompt` helper is used to create a ModelPrompt object, which represents the prompt or input that
-you want to send to an AI model. This helper is essential for passing user queries or instructions to the model runner.
-
-Parameters:
-
-`message`: A string containing the text of the prompt that you want to send to the model.
-
-Examples:
-```ruby
-# Simple Text Prompt
-prompt = build_model_prompt('What is the capital of France?')
-
-# Example usage with a model runner
-config = build_model_configuration(:openai, model: 'gpt-3.5-turbo')
-runner = build_model_runner(:openai, access_token: ENV['OPENAI_ACCESS_TOKEN'])
-result = runner.call(config, prompt)
-puts result # Expected output: "The capital of France is Paris."
-```
+RSpec::Llama provides a set of helpers to simplify the configuration and interaction with AI models during testing.
+These helpers allow you to easily define model configurations, runners, and prompts, making it easier to integrate AI
+models like OpenAI, Llama, and Ollama into your RSpec tests.
 
 ### `build_model_configuration(configuration_type, **options)`
 
@@ -78,13 +62,20 @@ Supported Options:
 
 `stop`: Up to 4 sequences where the API will stop generating further tokens.
 
+`seed`: A seed for controlling the randomness in generation. This ensures consistent outputs between runs when the same seed and model configuration are used. Useful for debugging and testing.
+
 ```ruby
 config = build_model_configuration(:openai, model: 'gpt-4', temperature: 0.7)
 
 # Example usage
-model_runner = build_model_runner(:openai, access_token: ENV['OPENAI_ACCESS_TOKEN'])
-prompt = build_model_prompt('What is the capital of France?')
-result = model_runner.call(config, prompt)
+runner = build_model_runner(:openai, access_token: ENV['OPENAI_ACCESS_TOKEN'])
+prompt = 'What gems does the Rails gem depend on?'
+result = runner.call(config, prompt)
+
+expect(result).to match_all(
+  'activesupport', 'activerecord', 'actionpack', 'actionview',
+  'actionmailer', 'actioncable', 'railties'
+)
 ```
 
 #### LlamaCpp Model Configuration
@@ -95,9 +86,11 @@ The LlamaCpp model configuration is used to set parameters for models running wi
 config = build_model_configuration(:llama_cpp, model: '/path/to/model', temperature: 0.5, predict: 500)
 
 # Example usage
-model_runner = build_model_runner(:llama_cpp, cli_path: '/path/to/llama-cli')
-prompt = build_model_prompt('Describe the Eiffel Tower.')
-result = model_runner.call(config, prompt)
+runner = build_model_runner(:llama_cpp, cli_path: '/path/to/llama-cli')
+prompt = 'What are the most popular Ruby frameworks?'
+result = runner.call(config, prompt)
+
+expect(result).to match_all('Ruby on Rails', 'Sinatra', 'Hanami')
 ```
 
 Supported Options:
@@ -118,9 +111,11 @@ The Ollama model configuration is similar to the OpenAI and LlamaCpp configurati
 config = build_model_configuration(:ollama, model: 'ollama3.1')
 
 # Example usage
-model_runner = build_model_runner(:ollama)
-prompt = build_model_prompt('What are the benefits of using Ruby?')
-result = model_runner.call(config, prompt)
+runner = build_model_runner(:ollama)
+prompt = 'Who created the Ruby programming language?'
+result = runner.call(config, prompt)
+
+expect(result).to match_all('Yukihiro', 'Matz', 'Matsumoto')
 ```
 
 Supported Options:
@@ -148,7 +143,7 @@ runner = build_model_runner(:openai, access_token: ENV['OPENAI_ACCESS_TOKEN'], o
 
 # Example usage
 config = build_model_configuration(:openai, model: 'gpt-4', temperature: 0.7)
-prompt = build_model_prompt('What is the capital of France?')
+prompt = 'What is the capital of France?'
 result = runner.call(config, prompt)
 puts result.to_s
 ```
@@ -169,143 +164,69 @@ coming soon
 
 coming soon
 
-### `build_model_assertion(assertion_type, value, *other_values)`
+## RSpec Matchers
 
-The helper method is used to create assertions that validate the model's output. Depending on the `assertion_type`, the method checks whether certain values are included, excluded, or matched in the model's response.
+This gem provides RSpec matchers for comparing model outputs, focusing on language models like those
+from OpenAI and Llama. These matchers help assert the presence or absence of specific strings or patterns
+in the output, and they are designed to work seamlessly with RSpec's syntax.
 
-Parameters:
+### `match(expected)`
 
-`assertion_type`: The type of assertion to create. It can be one of the following: `:include_all`, `:include_any`, `:exclude_all`.
-
-`value`: The primary value or pattern to assert. Can be a String or Regexp.
-
-`*other_values`: Additional values or patterns to include in the assertion.
-
-Returns: An assertion object that can be used to validate the model's output.
-
-#### `:include_all` Assertion
-
-This assertion checks that all specified values or patterns are present in the model's output.
+The `match` matcher is used to check if a string or pattern is present in the actual output.
 
 ```ruby
-assertion = build_model_assertion(:include_all, 'France', 'Paris')
-runner_result = "The capital of France is Paris."
-
-result = assertion.call(runner_result)
-result.passed? # true
-result.failed? # false
+expect(result).to match('Ruby on Rails')
+expect(result).to match(/Rails/)
 ```
 
-In this example, the assertion passes because both 'France' and 'Paris' are found in the output.
+**Passes if**: The output contains the exact string or matches the given regular expression.
 
-#### `:include_any` Assertion
+**Fails if**: The string or pattern is not present in the output.
 
-This assertion checks that at least one of the specified values or patterns is present in the model's output.
+### `match_all(*expected)`
+
+The `match_all` matcher checks if all the provided strings or patterns are present in the actual output.
 
 ```ruby
-assertion = build_model_assertion(:include_any, 'London', 'Paris')
-runner_result = "The capital of France is Paris."
-
-result = assertion.call(runner_result)
-result.passed? # true
-result.failed? # false
+expect(result).to match_all('Ruby on Rails', 'Sinatra', 'Hanami')
+expect(result).to match_all(/Rails/, /Sinatra/)
 ```
 
-#### `:exclude_all` Assertion
+**Passes if**: All strings or patterns are found in the output.
 
-This assertion checks that none of the specified values or patterns are present in the model's output.
+**Fails if**: Any one of the strings or patterns is missing from the output.
+
+### `match_any(*expected)`
+
+The `match_any` matcher checks if any of the provided strings or patterns are present in the actual output.
 
 ```ruby
-assertion = build_model_assertion(:exclude_all, 'London', 'Berlin')
-runner_result = "The capital of France is Paris."
-
-result = assertion.call(runner_result)
-result.passed? # true
-result.failed? # false
+expect(result).to match_any('RoR', 'Ruby on Rails')
+expect(result).to match_any(/Rails/, /Sinatra/)
 ```
 
-#### Advanced Usage with Regular Expressions:
+**Passes if**: At least one string or pattern is found in the output.
 
-You can also use regular expressions instead of plain strings for more complex assertions.
+**Fails if**: None of the strings or patterns are found in the output.
+
+### `match_none(*expected)`
+
+The `match_none` matcher ensures that none of the provided strings or patterns are present in the actual output.
 
 ```ruby
-assertion = build_model_assertion(:include_all, /France/, /Paris/)
-runner_result = "The capital of France is Paris."
-
-result = assertion.call(runner_result)
-result.passed? # true
-result.failed? # false
+expect(result).to match_none('Django', 'Flask', 'Symfony')
+expect(result).to match_none(/Django/, /Flask/)
 ```
 
-In this case, the assertion uses regular expressions to check that both 'France' and 'Paris' match parts of the output string.
+**Passes if**: None of the strings or patterns are found in the output.
 
-#### The assertion result object
+**Fails if**: Any one of the strings or patterns is found in the output.
 
-It represents the outcome of an assertion check against a model's output.
-It provides two methods `passed?` and `failed?` to evaluate whether the assertion passed or failed.
+## Full Example
 
-```ruby
-assertion = build_model_assertion(:include_all, 'France', 'Paris')
-assertion_result = assertion.call('The capital of France is Paris.')
-
-expect(assertion_result).to be_passed
-expect(assertion_result).not_to be_failed
-```
-
-## Full Example: Testing with OpenAI Models
-
-Here’s a full example that demonstrates how to use helpers to test various OpenAI models with different configurations and assertions.
+Here’s a full example that demonstrates how to use helpers and matchers to test various models with different configurations.
 
 ```ruby
-require 'rspec/llama'
-
-RSpec.describe 'OpenAI models' do
-  subject(:assertion_result) { assertion.call(runner_result) }
-
-  let(:prompt) { build_model_prompt('Is Minsk the capital of Belarus?') }
-  let(:assertion) { build_model_assertion(:include_any, 'Yes') }
-  let(:runner_result) { model_runner.call(model_configuration, prompt) }
-
-  let(:model_runner) { build_model_runner(:openai, access_token: ENV.fetch('OPENAI_ACCESS_TOKEN')) }
-  let(:model_configuration) { build_model_configuration(:openai, model:, temperature:) }
-  let(:temperature) { 0.5 }
-
-  context 'with gpt-4o-mini model' do
-    let(:model) { 'gpt-4o-mini' }
-
-    it 'supports basic syntax' do
-      expect(assertion_result).to be_passed
-    end
-
-    # also supports short syntax
-    it { is_expected.to be_passed }
-    it { is_expected.not_to be_failed }
-  end
-
-  context 'with gpt-4o model' do
-    let(:model) { 'gpt-4o' }
-
-    it { is_expected.to be_passed }
-  end
-
-  context 'with gpt-4-turbo model' do
-    let(:model) { 'gpt-4-turbo' }
-
-    it { is_expected.to be_passed }
-
-    context 'with different temperature' do
-      let(:temperature) { 0.1 }
-
-      it { is_expected.to be_passed }
-    end
-
-    context 'with different assertion' do
-      let(:assertion) { build_model_assertion(:exclude_all, 'No') }
-
-      it { is_expected.to be_passed }
-    end
-  end
-end
 
 ```
 
