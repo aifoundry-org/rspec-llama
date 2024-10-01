@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version = '0.1.0'
 
   s.metadata = { 'rubygems_mfa_required' => 'true' }
-  s.authors = ['Vadser']
+  s.authors = ['Vadim S.', 'Artur A.', 'Anatoli L.', 'Sergy S.']
   s.bindir = 'exe'
   s.description = <<~DESC
     RSpec::Llama is a testing framework that allows developers to easily configure, run, and validate
@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
     Whether you are developing AI-powered applications or simply need a reliable way to test various AI
     models' outputs, RSpec::Llama offers an all-in-one solution that integrates smoothly into your existing RSpec setup.
   DESC
-  s.email = ['vadser1999@gmail.com']
+  s.email = ['lobsters@cybergizer.com']
   s.files = Dir['CODE_OF_CONDUCT.md', 'LICENSE', 'README.md', 'lib/**/*.rb']
   s.homepage = 'https://github.com/aifoundry-org/rspec-llama'
   s.license = 'Apache-2.0'
