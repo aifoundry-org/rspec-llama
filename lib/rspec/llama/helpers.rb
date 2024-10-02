@@ -21,10 +21,6 @@ module RSpec
         include_any: 'IncludeAnyModelAssertion'
       }.freeze
 
-      def build_model_prompt(message)
-        ModelPrompt.new(message)
-      end
-
       def build_model_configuration(configuration_type, **)
         configuration_class = CONFIGURATION_TYPES[configuration_type.to_sym]
         raise "Unsupported model configuration type: #{configuration_type}" unless configuration_class
@@ -37,13 +33,6 @@ module RSpec
         raise "Unsupported model runner type: #{runner_type}" unless runner_class
 
         RSpec::Llama.const_get(runner_class).new(**)
-      end
-
-      def build_model_assertion(assertion_type, value, *other_values)
-        assertion_class = ASSERTION_TYPES[assertion_type.to_sym]
-        raise "Unsupported assertion type: #{assertion_type}" unless assertion_class
-
-        RSpec::Llama.const_get(assertion_class).new(value, *other_values)
       end
     end
   end

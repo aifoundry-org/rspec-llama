@@ -4,12 +4,45 @@ require 'bundler/setup'
 require 'dotenv/load'
 require 'rspec/llama'
 
-RSpec.describe RSpec::Llama do
-  subject(:assertion_result) { assertion.call(runner_result) }
+RSpec.shared_examples 'application frameworks' do
+  describe 'popular Ruby frameworks' do
+    let(:prompt) { 'What are the most popular Ruby frameworks?' }
 
-  let(:prompt) { build_model_prompt('Is Minsk the capital of Belarus?') }
-  let(:assertion) { build_model_assertion(:include_any, 'Yes') }
-  let(:runner_result) { model_runner.call(model_configuration, prompt) }
+    it 'matches Ruby frameworks', :aggregate_failures do
+      result = run_model!
+
+      expect(result).to match_all('Ruby on Rails', 'Sinatra', 'Hanami')
+      expect(result).to match_none('Django', 'Flask', 'Symfony', 'Laravel', 'Yii')
+    end
+  end
+
+  describe 'dependencies for the Rails gem' do
+    let(:prompt) { 'What gems does the Rails gem depend on?' }
+
+    it 'matches Rails dependencies' do
+      result = run_model!
+
+      expect(result).to match_all(
+        'activesupport', 'activerecord', 'actionpack', 'actionview',
+        'actionmailer', 'actioncable', 'railties'
+      )
+    end
+  end
+
+  describe 'popular Python frameworks' do
+    let(:prompt) { 'What are the most popular Python frameworks?' }
+
+    it 'matches Python frameworks', :aggregate_failures do
+      result = run_model!
+
+      expect(result).to match_all('Django', 'Flask')
+      expect(result).to match_none('Ruby on Rails', 'Sinatra', 'Hanami', 'Symfony', 'Laravel', 'Yii')
+    end
+  end
+end
+
+RSpec.describe 'Popular Application Frameworks' do
+  subject(:run_model!) { runner.call(config, prompt) }
 
   shared_examples 'model assertion comparison' do |model, temperature = 0.5|
     let(:model_runner) { build_model_runner(:openai, access_token: ENV.fetch('OPENAI_ACCESS_TOKEN')) }
@@ -47,43 +80,31 @@ RSpec.describe RSpec::Llama do
   end
 
   context 'with OpenAI model runner' do
-    let(:model_runner) { build_model_runner(:openai, access_token: ENV.fetch('OPENAI_ACCESS_TOKEN')) }
-    let(:model_configuration) { build_model_configuration(:openai, model:, temperature:) }
+    let(:runner) { build_model_runner(:openai, access_token: ENV.fetch('OPENAI_ACCESS_TOKEN')) }
+    let(:config) { build_model_configuration(:openai, model:, temperature:, seed: RSpec.configuration.seed) }
     let(:temperature) { 0.5 }
 
     context 'with gpt-4o-mini model' do
       let(:model) { 'gpt-4o-mini' }
 
-      it 'supports basic syntax' do
-        expect(assertion_result).to be_passed
-      end
-
-      # also supports short syntax
-      it { is_expected.to be_passed }
-      it { is_expected.not_to be_failed }
+      include_examples 'application frameworks'
     end
 
     context 'with gpt-4o model' do
       let(:model) { 'gpt-4o' }
 
-      it { is_expected.to be_passed }
+      include_examples 'application frameworks'
     end
 
     context 'with gpt-4-turbo model' do
       let(:model) { 'gpt-4-turbo' }
 
-      it { is_expected.to be_passed }
+      include_examples 'application frameworks'
 
       context 'with different temperature' do
         let(:temperature) { 0.1 }
 
-        it { is_expected.to be_passed }
-      end
-
-      context 'with different assertion' do
-        let(:assertion) { build_model_assertion(:exclude_all, 'No') }
-
-        it { is_expected.to be_passed }
+        include_examples 'application frameworks'
       end
     end
   end

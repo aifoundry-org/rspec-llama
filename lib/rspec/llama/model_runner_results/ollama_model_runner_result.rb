@@ -2,7 +2,10 @@
 
 module RSpec
   module Llama
-    class OllamaModelRunnerResult
+    class OllamaModelRunnerResult < BaseModelRunnerResult
+      def to_s
+        response
+      end
     end
   end
 end

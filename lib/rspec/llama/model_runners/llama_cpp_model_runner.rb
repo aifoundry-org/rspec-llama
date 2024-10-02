@@ -12,10 +12,10 @@ module RSpec
       end
 
       # @param [RSpec::Llama::LlamaCppModelConfiguration] configuration
-      # @param [RSpec::Llama::ModelPrompt] prompt
+      # @param [String] prompt
       # @return [RSpec::Llama::LlamaCppModelRunnerResult]
       def call(configuration, prompt)
-        command = [cli_path, '--prompt', prompt.message] + configuration.to_a
+        command = [cli_path, '--prompt', prompt.to_s] + configuration.to_a
 
         IO.popen(command, 'r+') do |io|
           LlamaCppModelRunnerResult.new(io.read)

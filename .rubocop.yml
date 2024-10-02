@@ -6,6 +6,20 @@ require:
 Style/Documentation:
   Enabled: false
 
+Style/SymbolArray:
+  EnforcedStyle: brackets
+  MinSize: 1
+
+Style/WordArray:
+  EnforcedStyle: brackets
+  MinSize: 1
+
+Style/SelectByRegexp:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Enabled: false
+
 RSpec/SpecFilePathFormat:
   Enabled: false
 

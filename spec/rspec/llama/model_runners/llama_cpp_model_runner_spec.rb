@@ -6,7 +6,7 @@ RSpec.describe RSpec::Llama::LlamaCppModelRunner do
   let(:cli_path) { 'llama-cli' }
   let(:cli_options) { ['--model', '/path/to/model', '--temp', '0.5', '--threads', '4', '--predict', '-1'] }
   let(:model_configuration) { instance_double(RSpec::Llama::LlamaCppModelConfiguration, to_a: cli_options) }
-  let(:model_prompt) { instance_double(RSpec::Llama::ModelPrompt, message: 'Tell me about Ruby programming') }
+  let(:model_prompt) { 'Tell me about Ruby programming' }
 
   describe '#call' do
     it 'runs the llama-cli executable with the correct configuration and prompt', :aggregate_failures do

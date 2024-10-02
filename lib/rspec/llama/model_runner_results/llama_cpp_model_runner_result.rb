@@ -2,15 +2,9 @@
 
 module RSpec
   module Llama
-    class LlamaCppModelRunnerResult
-      attr_reader :result
-
-      def initialize(result)
-        @result = result
-      end
-
+    class LlamaCppModelRunnerResult < BaseModelRunnerResult
       def to_s
-        result.strip # Removes any leading/trailing whitespace or newlines
+        response.strip
       end
     end
   end

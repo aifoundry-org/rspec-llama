@@ -13,9 +13,7 @@ RSpec.describe RSpec::Llama::OpenaiModelRunner do
       to_h: { model: 'gpt-3.5-turbo', temperature: 0.5 }
     )
   end
-  let(:model_prompt) do
-    instance_double(RSpec::Llama::ModelPrompt, message: 'Is Minsk the capital of Belarus?')
-  end
+  let(:model_prompt) { 'Is Minsk the capital of Belarus?' }
 
   context 'with valid access token' do
     let(:access_token) { ENV.fetch('OPENAI_ACCESS_TOKEN', 'token') }
